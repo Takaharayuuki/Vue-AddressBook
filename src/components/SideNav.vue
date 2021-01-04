@@ -1,13 +1,7 @@
 <template>
   <v-layout wrap style="height: 200px;">
-
-    <v-container>
-      <v-layout justify-center>
-        <v-btn color="pink" dark @click.stop="drawer = !drawer">Toggle</v-btn>
-      </v-layout>
-    </v-container>
-
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <!-- ドロワーメニュー -->
+    <v-navigation-drawer v-model="$store.state.drawer" absolute temporary>
       <v-list class="pa-1">
         <v-list-tile avatar>
           <v-list-tile-avatar>
@@ -34,6 +28,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    <!-- / ドロワーメニュー -->
   </v-layout>
 </template>
 
@@ -41,7 +36,6 @@
 export default {
   data () {
     return {
-      drawer: false,
       items: [
         { title: '連絡先一覧', icon: 'list' }
       ]
