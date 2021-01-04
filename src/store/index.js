@@ -5,7 +5,7 @@ import firebase from 'firebase'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  //* データの様な扱い
+  // データの様な扱い
   state: {
     login_user: null,
     drawer: false,
@@ -15,33 +15,42 @@ export default new Vuex.Store({
     setLoginUser(state, user) {
       state.login_user = user
     },
-    //* 2.actionから指示を受けて動作する
-    //* stateの状態を変更する
+    deleteLoginUser(state) {
+      state.login_user = null
+    },
+    logout() {
+      firebase.auth().signOut()
+    },
+    // 2.actionから指示を受けて動作する
+    // stateの状態を変更する
     toggleSideMenu(state) {
       state.drawer = !state.drawer
     },
     addAddress(state, address) {
-      //* addressを引数で受け取り stateのaddresses配列に追加
+      // addressを引数で受け取り stateのaddresses配列に追加
       state.addresses.push(address)
     }
   },
   actions: {
-    //* 1.コンポーネントから指示を受けて最初に動作する
-    //* commitによってmutationを動かす
+    // 1.コンポーネントから指示を受けて最初に動作する
+    // commitによってmutationを動かす
     toggleSideMenu({ commit }) {
       commit('toggleSideMenu')
     },
     addAddress({ commit }, address) {
-      //* address を引数に渡してmutasionsを呼び出す
+      // address を引数に渡してmutasionsを呼び出す
       commit('addAddress', address)
     },
     login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider()
-      //* googleの認証画面にリダイレクトする
+      // googleの認証画面にリダイレクトする
       firebase.auth().signInWithRedirect(google_auth_provider) 
     },
     setLoginUser({ commit}, user) {
       commit('setLoginUser', user)
+    },
+    deleteLoginUser({ commit }) {
+      commit('deleteLoginUser')
     }
   },
 })
