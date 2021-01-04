@@ -1,4 +1,4 @@
-# sample-app
+# AddressBook-app
 
 ## Project setup
 ```
