@@ -51,7 +51,7 @@ export default new Vuex.Store({
     },
     logout() {
       firebase.auth().signOut()
-    }
+    },
   },
   getters: {
     userName: state => state.login_user ? state.login_user.displayName : '',

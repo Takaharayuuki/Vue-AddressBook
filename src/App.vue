@@ -41,7 +41,7 @@ export default {
     // }
     //? 方法２
     //! mapactinos を使用した方が便利
-    ...mapActions(['toggleSideMenu', 'setLoginUser','deleteLoginUser','logout'])
+    ...mapActions(['toggleSideMenu', 'setLoginUser','deleteLoginUser','logout','changeLodingFlg'])
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
@@ -50,7 +50,7 @@ export default {
         if(this.$router.currentRoute.name === 'Home') this.$router.push({ name: 'Addresses'})
       } else {
         this.deleteLoginUser(user)
-        this.$router.push({ name: 'Home'})
+        this.$router.push('/', () => {})
       }
     })
   }
