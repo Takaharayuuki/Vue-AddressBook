@@ -4,8 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  //* データの様な扱い
   state: {
-    //* データの様な扱い
     drawer: false,
     addresses: []
   },
@@ -27,7 +27,7 @@ export default new Vuex.Store({
       commit('toggleSideMenu')
     },
     addAddress({ commit }, address) {
-      //? address を引数に渡してmutasionを呼び出す
+      //? address を引数に渡してmutasionsを呼び出す
       commit('addAddress', address)
     }
   },
