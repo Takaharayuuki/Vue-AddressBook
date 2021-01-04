@@ -18,6 +18,7 @@
 //! mapactinos を使用した方が便利
 import { mapActions } from 'vuex'
 import SideNav from './components/SideNav'
+import firebase from 'firebase'
 export default {
   name: 'App',
   components: {
@@ -37,7 +38,14 @@ export default {
     // }
     //? 方法２
     //! mapactinos を使用した方が便利
-    ...mapActions(['toggleSideMenu'])
+    ...mapActions(['toggleSideMenu', 'setLoginUser'])
   },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.setLoginUser(user)
+      }
+    })
+  }
 }
 </script>
