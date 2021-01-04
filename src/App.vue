@@ -9,12 +9,13 @@
     </v-toolbar>
     <side-nav></side-nav>
     <v-content>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-//! mapactinos を使用した方が便利 
+//! mapactinos を使用した方が便利
 import { mapActions } from 'vuex'
 import SideNav from './components/SideNav'
 export default {
