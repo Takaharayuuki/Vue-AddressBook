@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -29,6 +30,10 @@ export default new Vuex.Store({
     addAddress({ commit }, address) {
       //? address を引数に渡してmutasionsを呼び出す
       commit('addAddress', address)
+    },
+    login() {
+      const google_auth_provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithRedirect(google_auth_provider) //? googleの認証画面にリダイレクトする
     }
   },
 })
