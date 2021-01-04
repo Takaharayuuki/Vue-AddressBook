@@ -18,9 +18,6 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.login_user = null
     },
-    logout() {
-      firebase.auth().signOut()
-    },
     // 2.actionから指示を受けて動作する
     // stateの状態を変更する
     toggleSideMenu(state) {
@@ -51,6 +48,13 @@ export default new Vuex.Store({
     },
     deleteLoginUser({ commit }) {
       commit('deleteLoginUser')
+    },
+    logout() {
+      firebase.auth().signOut()
     }
   },
+  getters: {
+    userName: state => state.login_user ? state.login_user.displayName : '',
+    photoURL: state => state.login_user ? state.login_user.photoURL : ''
+  }
 })
