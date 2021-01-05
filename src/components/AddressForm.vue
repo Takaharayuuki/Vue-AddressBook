@@ -34,15 +34,26 @@ export default {
   },
   methods: {
     submit() {
-      //* storeのアクションにthis.addressを渡す
-      this.addAddress(this.address)
-      //* アドレス画面一覧に遷移する
+      if(this.$route.params.address_id) {
+        this.updateAddress({ id: this.$route.params.address_id, address: this.address})
+      } else {
+        this.addAddress(this.address)
+      }
       this.$router.push({ name: 'Addresses' })
-      //* アドレスの中身を初期化する
       this.address = {}
     },
     //? storeからactionを使える様にする
-    ...mapActions(['addAddress'])
+    ...mapActions(['addAddress','updateAddress'])
   },
+  created() {
+    if(!this.$route.params.address_id) return
+
+    const address = this.$store.getters.getAddressById(this.$route.params.address_id)
+    if(address) {
+      this.address = address
+    } else {
+      this.$router.push({ name: 'Addresses'})
+    }
+  }
 }
 </script>
