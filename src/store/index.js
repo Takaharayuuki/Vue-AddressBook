@@ -34,14 +34,15 @@ export default new Vuex.Store({
     toggleSideMenu({ commit }) {
       commit('toggleSideMenu')
     },
-    addAddress({ commit }, address) {
+    addAddress({ getters, commit }, address) {
+      if(getters.uid) firebase.firestore().collection(`users/${getters.uid}/addresses`).add(address)
       // address を引数に渡してmutasionsを呼び出す
       commit('addAddress', address)
     },
     login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider()
       // googleの認証画面にリダイレクトする
-      firebase.auth().signInWithRedirect(google_auth_provider) 
+      firebase.auth().signInWithRedirect(google_auth_provider)
     },
     setLoginUser({ commit}, user) {
       commit('setLoginUser', user)
@@ -55,6 +56,7 @@ export default new Vuex.Store({
   },
   getters: {
     userName: state => state.login_user ? state.login_user.displayName : '',
-    photoURL: state => state.login_user ? state.login_user.photoURL : ''
+    photoURL: state => state.login_user ? state.login_user.photoURL : '',
+    uid: state => state.login_user ? state.login_user.uid : null
   }
 })
