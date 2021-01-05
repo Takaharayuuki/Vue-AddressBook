@@ -41,12 +41,13 @@ export default {
     // }
     //? 方法２
     //! mapactinos を使用した方が便利
-    ...mapActions(['toggleSideMenu', 'setLoginUser','deleteLoginUser','logout','changeLodingFlg'])
+    ...mapActions(['toggleSideMenu', 'setLoginUser','deleteLoginUser','logout','changeLodingFlg','fetchAddresses'])
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
         this.setLoginUser(user)
+        this.fetchAddresses()
         if(this.$router.currentRoute.name === 'Home') this.$router.push({ name: 'Addresses'})
       } else {
         this.deleteLoginUser(user)
