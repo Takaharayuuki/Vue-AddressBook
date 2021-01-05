@@ -20,11 +20,14 @@
             <td class="text-xs-left">{{ props.item.tel }}</td>
             <td class="text-xs-left">{{ props.item.email }}</td>
             <td class="text-xs-left">{{ props.item.address }}</td>
-            <td class="text-xs-left">
+            <td class="text-xs-center">
               <span>
                 <router-link :to="{ name: 'Address_edit', params: { address_id: props.item.id }}">
                   <v-icon small class="mr-2">edit</v-icon>
                 </router-link>
+              </span>
+              <span>
+                <v-icon small class="ml-2" @click="deleteConfirm(props.item.id)">delete</v-icon>
               </span>
             </td>
           </template>
@@ -35,6 +38,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -50,6 +54,12 @@ export default {
   },
   created() {
     this.addresses = this.$store.state.addresses
+  },
+  methods: {
+    ...mapActions(['deleteAddress']),
+    deleteConfirm(id) {
+      this.deleteAddress({id})
+    }
   }
 }
 </script>

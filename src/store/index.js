@@ -31,7 +31,11 @@ export default new Vuex.Store({
     updateAddress (state, { id, address}) {
       const index = state.addresses.findIndex(address => address.id === id)
       state.addresses[index] = address
-    }
+    },
+    daleteAddress (state, {id}) {
+      const index = state.addresses.findIndex(address => address.id === id)
+      state.addresses.splice(index, 1)
+    },
   },
   actions: {
     // 1.コンポーネントから指示を受けて最初に動作する
@@ -69,7 +73,13 @@ export default new Vuex.Store({
         firebase.firestore().collection(`users/${getters.uid}/addresses`).doc(id).update(address)
         .then(() => { commit('updateAddress',{ id, address }) })
       }
-    }
+    },
+    deleteAddress ({ getters, commit }, {id}) {
+      if (getters.uid) {
+        firebase.firestore().collection(`users/${getters.uid}/addresses`).doc(id).delete()
+        .then(() => { commit('daleteAddress',{ id }) })
+      }
+    },
   },
   getters: {
     userName: state => state.login_user ? state.login_user.displayName : '',
