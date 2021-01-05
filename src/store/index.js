@@ -23,8 +23,9 @@ export default new Vuex.Store({
     toggleSideMenu(state) {
       state.drawer = !state.drawer
     },
-    addAddress(state, address) {
+    addAddress(state, { id, address}) {
       // addressを引数で受け取り stateのaddresses配列に追加
+      address.id = id
       state.addresses.push(address)
     }
   },
@@ -35,9 +36,10 @@ export default new Vuex.Store({
       commit('toggleSideMenu')
     },
     addAddress({ getters, commit }, address) {
-      if(getters.uid) firebase.firestore().collection(`users/${getters.uid}/addresses`).add(address)
-      // address を引数に渡してmutasionsを呼び出す
-      commit('addAddress', address)
+      if (getters.uid) {
+        firebase.firestore().collection(`users/${getters.uid}/addresses`).add(address)
+        .then( doc => { commit('addAddress',{ id: doc.id, address}) })
+      }
     },
     login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider()
@@ -55,7 +57,7 @@ export default new Vuex.Store({
     },
     fetchAddresses({ getters, commit }) {
       firebase.firestore().collection(`users/${getters.uid}/addresses`).get().then(snapshot => {
-          snapshot.forEach(doc => commit('addAddress', doc.data()))
+          snapshot.forEach(doc => commit('addAddress',{ id: doc.id, address: doc.data()}))
         })
     }
   },
